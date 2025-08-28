@@ -37,6 +37,12 @@ namespace Avancerad_Lab1.Repositories
 
             return seatings;
         }
+        public async Task<List<Seating>> GetAllUnBookedSeatingsAsync()
+        {
+            var seatings = await _dbContext.Seatings.Where(s => s.IsBooked == false).ToListAsync();
+
+            return seatings;
+        }
         public async Task<Seating> GetSeatingByIdAsync(int seatingId)
         {
             var seating = await _dbContext.Seatings

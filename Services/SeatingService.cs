@@ -25,6 +25,19 @@ namespace Avancerad_Lab1.Services
             }).ToList();
             return seatingDTO;
         }
+        public async Task<List<SeatingDTO>> GetAllUnBookedSeatingsAsync()
+        {
+            var Seatings = await _seatingrepository.GetAllUnbookedSeatingsAsync();
+
+            var seatingDTO = Seatings.Select(r => new SeatingDTO
+            {
+                TableNumber = r.TableNumber,
+                IsBooked = r.IsBooked,
+                Capacity = r.Capacity,
+
+            }).ToList();
+            return seatingDTO;
+        }
         public async Task<SeatingDTO> GetSeatingByIdAsync(int seatingId)
         {
             var seating = await _seatingrepository.GetSeatingByIdAsync(seatingId);
