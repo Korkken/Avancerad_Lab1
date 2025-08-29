@@ -27,7 +27,7 @@ namespace Avancerad_Lab1.Services
         }
         public async Task<List<SeatingDTO>> GetAllUnBookedSeatingsAsync()
         {
-            var Seatings = await _seatingrepository.GetAllUnbookedSeatingsAsync();
+            var Seatings = await _seatingrepository.GetAllUnBookedSeatingsAsync();
 
             var seatingDTO = Seatings.Select(r => new SeatingDTO
             {

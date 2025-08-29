@@ -1,6 +1,7 @@
 ﻿using Avancerad_Lab1.DTOs;
 using Avancerad_Lab1.Models;
 using Avancerad_Lab1.Services.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -27,6 +28,7 @@ namespace Avancerad_Lab1.Controllers
 
         // POST api/<ReservationController>
         [HttpPost]
+        
         public async Task<ActionResult<ReservationDTO>> CreateAdmin(AdminDTO adminDTO)
         {
             var adminId = await _adminService.CreateAdminAsync(adminDTO);
