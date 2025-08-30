@@ -3,6 +3,7 @@ using Avancerad_Lab1.DTOs;
 using Avancerad_Lab1.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -25,7 +26,7 @@ namespace Avancerad_Lab1.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Login(AdminDTO login)
         {
-            var user = await _context.Admins.FindAsync(login.UserName);
+            var user = await _context.Admins.FirstOrDefaultAsync(u => u.UserName == login.UserName);
             
 
             if (user == null)

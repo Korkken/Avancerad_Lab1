@@ -28,7 +28,7 @@ namespace Avancerad_Lab1.Controllers
 
         // POST api/<ReservationController>
         [HttpPost]
-        
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ReservationDTO>> CreateAdmin(AdminDTO adminDTO)
         {
             var adminId = await _adminService.CreateAdminAsync(adminDTO);
