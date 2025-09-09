@@ -23,13 +23,14 @@ namespace Avancerad_Lab1.Controllers
 
         // POST api/<ReservationController>
         [HttpPost]
-
+        [Authorize("Admin")]
         public async Task<ActionResult<ReservationDTO>> CreateAdmin(AdminDTO adminDTO)
         {
             var adminId = await _adminService.CreateAdminAsync(adminDTO);
             return Ok(adminId);
         }
         [HttpGet("{id}")]
+        [Authorize("Admin")]
         public async Task<ActionResult<ReservationDTO>> GetAdminById(int adminId)
         {
             var admin = await _adminService.GetAdminByIdAsync(adminId);
@@ -38,6 +39,7 @@ namespace Avancerad_Lab1.Controllers
 
         // PUT api/<ReservationController>/5
         [HttpPut("{id}")]
+        [Authorize("Admin")]
         public async Task<ActionResult<ReservationDTO>> UpdateAdminAsync(AdminDTO adminDTO)
         {
             var admin = await _adminService.UpdateAdminAsync(adminDTO);
@@ -46,6 +48,7 @@ namespace Avancerad_Lab1.Controllers
 
         // DELETE api/<ReservationController>/5
         [HttpDelete("{id}")]
+        [Authorize("Admin")]
         public async Task<ActionResult<Reservation>> DeleteAdmin(int adminId)
         {
             var admin = await _adminService.DeleteAdminAsync(adminId);
