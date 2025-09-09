@@ -9,6 +9,7 @@ namespace Avancerad_Lab1.Models
         public int Capacity { get; set; }
         public int TableNumber { get; set; }
         public bool IsBooked { get; set; }
-        public DateTime StartTime { get; set; }
+        public DateOnly Date { get; set; }
+        public TimeOnly StartTime { get; set; }
     }
 }

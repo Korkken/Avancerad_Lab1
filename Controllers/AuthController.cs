@@ -24,28 +24,38 @@ namespace Avancerad_Lab1.Controllers
             _configuration = configuration;
         }
         [HttpPost("Login")]
-        public async Task<IActionResult> Login(AdminDTO login)
+        public async Task<IActionResult> Login(LoginDTO login)
         {
             var user = await _context.Admins.FirstOrDefaultAsync(u => u.UserName == login.UserName);
             
-
             if (user == null)
             {
-                return BadRequest("Invalid email or password");
+                return Unauthorized("Invalid username or password");
             }
-            bool passwordMatch = BCrypt.Net.BCrypt.Verify(login.PasswordHash, user.PasswordHash);
+            
+            bool passwordMatch = BCrypt.Net.BCrypt.Verify(login.Password, user.PasswordHash);
             if (!passwordMatch)
             {
-                return BadRequest("Invalid email or password");
+                return Unauthorized("Invalid username or password");
             }
             var token = GenerateToken(user);
-            return Ok(new { token });
+            
+            Response.Cookies.Append("jwt", token, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = false,
+                SameSite = SameSiteMode.Lax,
+                Expires = DateTime.UtcNow.AddMinutes(15)
+            });
+            
+            return Ok(new { message = "Login successful" });
         }
 
         [HttpPost("Logout")]
         public IActionResult Logout()
         {
-            return Ok("Logout");
+            Response.Cookies.Delete("jwt");
+            return Ok(new { message = "Logout successful" });
         }
         private string GenerateToken(Admin admin)
         {

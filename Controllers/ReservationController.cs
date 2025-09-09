@@ -33,28 +33,28 @@ namespace Avancerad_Lab1.Controllers
             var reservationId = await _reservationService.CreateReservationAsync(reservationDTO);
             return Ok(reservationId);
         }
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ReservationDTO>> GetReservationById(int reservationId)
+        [HttpGet("{Id}")]
+        public async Task<ActionResult<ReservationDTO>> GetReservationById(int Id)
         {
-            var reservation = await _reservationService.GetReservationByIdAsync(reservationId);
+            var reservation = await _reservationService.GetReservationByIdAsync(Id);
             return Ok(reservation);
         }
 
         // PUT api/<ReservationController>/5
-        [HttpPut("{id}")]
-        public async Task<ActionResult<ReservationDTO>> UpdateReservationAsync(ReservationDTO reservationDTO)
+        [HttpPut("{Id}")]
+        public async Task<ActionResult<ReservationDTO>> UpdateReservationAsync(int Id, ReservationDTO reservationDTO)
         {
+            reservationDTO.Id = Id;
             var reservation = await _reservationService.UpdateReservationAsync(reservationDTO);
             return Ok(reservation);
         }
 
         // DELETE api/<ReservationController>/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Reservation>> DeleteReservation(int reservationId)
+        [HttpDelete("{Id}")]
+        public async Task<ActionResult<Reservation>> DeleteReservation(int Id)
         {
-            var reservation = await _reservationService.DeleteReservationAsync(reservationId);
+            var reservation = await _reservationService.DeleteReservationAsync(Id);
             return Ok(reservation);
-
         }
     }
 }

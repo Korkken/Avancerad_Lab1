@@ -20,8 +20,9 @@ namespace Avancerad_Lab1.Services
 
             var reservationsDTO = Reservations.Select(r => new ReservationDTO
             {
+                Id = r.Id,
                 BookingDate = r.BookingDate,
-                BookingDuration = r.BookingDuration,
+
                 GuestAmount = r.GuestAmount,
                 FK_SeatingId = r.FK_SeatingId,
                 FK_CustomerId = r.FK_CustomerId,
@@ -37,8 +38,9 @@ namespace Avancerad_Lab1.Services
             }
             var reservationDTO = new ReservationDTO
             {
+                Id = reservation.Id,
                 BookingDate = reservation.BookingDate,
-                BookingDuration = reservation.BookingDuration,
+
                 GuestAmount = reservation.GuestAmount,
                 FK_SeatingId = reservation.FK_SeatingId,
                 FK_CustomerId = reservation.FK_CustomerId,
@@ -47,28 +49,25 @@ namespace Avancerad_Lab1.Services
         }
         public async Task<int> CreateReservationAsync(ReservationDTO reservationDTO)
         {
-            var seating = await _seatingRepository.GetSeatingByIdAsync(reservationDTO.FK_SeatingId);
-            var startTime = seating.StartTime;
-            var endTime = startTime.AddHours(reservationDTO.BookingDuration);
-            
             var existingReservations = await _reservationRepository.GetAllReservationsAsync();
             
+            var hasConflict = existingReservations.Any(r => 
+                r.FK_SeatingId == reservationDTO.FK_SeatingId &&
+                r.BookingDate.Date == reservationDTO.BookingDate.Date);
             
-            if (seating.IsBooked)
+            if (hasConflict)
                 throw new InvalidOperationException("Time slot already booked for this seating");
 
             var reservation = new Reservation
             {
                 BookingDate = reservationDTO.BookingDate,
-                BookingDuration = reservationDTO.BookingDuration,
                 GuestAmount = reservationDTO.GuestAmount,
                 FK_CustomerId = reservationDTO.FK_CustomerId,
                 FK_SeatingId = reservationDTO.FK_SeatingId
             };
             var newReservationId = await _reservationRepository.AddReservationAsync(reservation);
             
-            seating.IsBooked = true;
-            await _seatingRepository.UpdateSeatingAsync(seating);
+
             
             return newReservationId;
         }
@@ -76,12 +75,14 @@ namespace Avancerad_Lab1.Services
         {
             var reservation = new Reservation
             {
+                Id = reservationDTO.Id,
                 BookingDate = reservationDTO.BookingDate,
-                BookingDuration = reservationDTO.BookingDuration,
+
                 GuestAmount = reservationDTO.GuestAmount,
+                FK_SeatingId = reservationDTO.FK_SeatingId,
+                FK_CustomerId = reservationDTO.FK_CustomerId
             };
-            var newReservation = await _reservationRepository.UpdateReservationAsync(reservation);
-            return newReservation;
+            return await _reservationRepository.UpdateReservationAsync(reservation);
         }
         public Task<bool> DeleteReservationAsync(int ReservationId)
         {

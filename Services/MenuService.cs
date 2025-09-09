@@ -18,6 +18,7 @@ namespace Avancerad_Lab1.Services
 
             var menuDTO = Menus.Select(r => new MenuDTO
             {
+                Id = r.Id,
                 MenuItem = r.MenuItem,
                 Description = r.Description,
                 IsPopular = r.IsPopular,
@@ -35,6 +36,7 @@ namespace Avancerad_Lab1.Services
             }
             var menuDTO = new MenuDTO
             {
+                Id = menu.Id,
                 MenuItem = menu.MenuItem,
                 Description = menu.Description,
                 IsPopular = menu.IsPopular,
@@ -60,6 +62,7 @@ namespace Avancerad_Lab1.Services
         {
             var menu = new Menu
             {
+                Id = menuDTO.Id,
                 MenuItem = menuDTO.MenuItem,
                 Description = menuDTO.Description,
                 IsPopular = menuDTO.IsPopular,

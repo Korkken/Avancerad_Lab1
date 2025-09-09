@@ -47,14 +47,16 @@ namespace Avancerad_Lab1.Repositories
         }
         public async Task<bool> UpdateReservationAsync(Reservation reservation)
         {
-            _dbContext.Reservations.Update(reservation);
+            var existingReservation = await _dbContext.Reservations.FindAsync(reservation.Id);
+            if (existingReservation == null) return false;
+            
+            existingReservation.BookingDate = reservation.BookingDate;
+            existingReservation.GuestAmount = reservation.GuestAmount;
+            existingReservation.FK_SeatingId = reservation.FK_SeatingId;
+            existingReservation.FK_CustomerId = reservation.FK_CustomerId;
+            
             var result = await _dbContext.SaveChangesAsync();
-
-            if (result != 0)
-            {
-                return true;
-            }
-            return false;
+            return result > 0;
         }
     }
 }

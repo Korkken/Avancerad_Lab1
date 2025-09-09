@@ -17,9 +17,13 @@ namespace Avancerad_Lab1.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Admin>().HasData(
-                new Admin { Id = 1, UserName = "admin", PasswordHash = "$2a$11$OXFBTjx.tGgfWLD9tPleje9QW4IA/hE6ccpyevXL4aJ8NoZMhBE5a", Role = "Admin"}
-            );
+            modelBuilder.Entity<Menu>()
+                .Property(m => m.Id)
+                .ValueGeneratedOnAdd();
+                
+            modelBuilder.Entity<Seating>()
+                .Property(s => s.Id)
+                .ValueGeneratedOnAdd();
         }
     }
 }

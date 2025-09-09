@@ -4,6 +4,8 @@ namespace Avancerad_Lab1.DTOs
 {
     public class MenuDTO
     {
+        public int Id { get; set; }
+        [Required]
         public string MenuItem { get; set; }
         [Required]
         public string Description { get; set; }

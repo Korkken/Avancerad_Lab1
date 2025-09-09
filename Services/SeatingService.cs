@@ -18,10 +18,12 @@ namespace Avancerad_Lab1.Services
 
             var seatingDTO = Seatings.Select(r => new SeatingDTO
             {
+                Id = r.Id,
                 TableNumber = r.TableNumber,
                 IsBooked = r.IsBooked,
                 Capacity = r.Capacity,
-                
+                Date = r.Date,
+                StartTime = r.StartTime,
             }).ToList();
             return seatingDTO;
         }
@@ -31,10 +33,12 @@ namespace Avancerad_Lab1.Services
 
             var seatingDTO = Seatings.Select(r => new SeatingDTO
             {
+                Id = r.Id,
                 TableNumber = r.TableNumber,
                 IsBooked = r.IsBooked,
                 Capacity = r.Capacity,
-
+                Date = r.Date,
+                StartTime = r.StartTime,
             }).ToList();
             return seatingDTO;
         }
@@ -47,9 +51,12 @@ namespace Avancerad_Lab1.Services
             }
             var seatingDTO = new SeatingDTO
             {
+                Id = seating.Id,
                 TableNumber = seating.TableNumber,
                 IsBooked = seating.IsBooked,
                 Capacity = seating.Capacity,
+                Date = seating.Date,
+                StartTime = seating.StartTime,
             };
             return seatingDTO;
         }
@@ -60,6 +67,8 @@ namespace Avancerad_Lab1.Services
                 TableNumber = seatingDTO.TableNumber,
                 IsBooked = seatingDTO.IsBooked,
                 Capacity = seatingDTO.Capacity,
+                Date = seatingDTO.Date,
+                StartTime = seatingDTO.StartTime,
             };
             var newSeatingId = await _seatingrepository.AddSeatingAsync(seating);
             return newSeatingId;
@@ -68,9 +77,12 @@ namespace Avancerad_Lab1.Services
         {
             var seating = new Seating
             {
+                Id = seatingDTO.Id,
                 TableNumber = seatingDTO.TableNumber,
                 IsBooked = seatingDTO.IsBooked,
                 Capacity = seatingDTO.Capacity,
+                Date = seatingDTO.Date,
+                StartTime = seatingDTO.StartTime,
             };
             var updatedSeating = await _seatingrepository.UpdateSeatingAsync(seating);
             return updatedSeating;

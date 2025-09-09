@@ -20,15 +20,10 @@ namespace Avancerad_Lab1.Controllers
             _adminService = adminService;
         }
         [HttpGet]
-        public async Task<ActionResult<List<AdminDTO>>> GetAllAdmins()
-        {
-            var admin = await _adminService.GetAllAdminsAsync();
-            return Ok(admin);
-        }
 
         // POST api/<ReservationController>
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+
         public async Task<ActionResult<ReservationDTO>> CreateAdmin(AdminDTO adminDTO)
         {
             var adminId = await _adminService.CreateAdminAsync(adminDTO);
